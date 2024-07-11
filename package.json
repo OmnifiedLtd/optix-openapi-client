@@ -7,10 +7,12 @@
     "test": "vitest",
     "test:once": "vitest run",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
-    "test:coverage": "vitest run --coverage --coverage.reporter=text"
+    "test:coverage": "vitest run --coverage --coverage.reporter=text",
+    "test:ts": "tsc --noEmit"
   },
   "dependencies": {
     "@types/node": "20.6.0",
+    "openapi-fetch": "^0.10.2",
     "typescript": "^5.5.3"
   },
   "devDependencies": {
