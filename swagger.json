@@ -1,0 +1,3031 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Optix Public API",
+        "version": "1"
+    },
+    "paths": {
+        "/v1/appointmenttype": {
+            "post": {
+                "tags": [
+                    "AppointmentType"
+                ],
+                "summary": "Get all appointment types for tenant.",
+                "operationId": "AppointmentType_SearchAppointmentTypes",
+                "requestBody": {
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchAppointmentTypesRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchAppointmentTypesRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchAppointmentTypesRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchAppointmentTypesRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppointmentTypesResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/availability": {
+            "post": {
+                "tags": [
+                    "Availability"
+                ],
+                "summary": "Get availability blocks given the search criteria.",
+                "operationId": "Availability_GetAvailabilityBlocks",
+                "requestBody": {
+                    "description": "The query for availability",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryAvailabilityBlocksRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryAvailabilityBlocksRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryAvailabilityBlocksRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryAvailabilityBlocksRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QueryAvailabilityBlocksResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/branch/{branchId}": {
+            "get": {
+                "tags": [
+                    "Branch"
+                ],
+                "summary": "Get branch details.",
+                "operationId": "Branch_GetBranchDetails",
+                "parameters": [
+                    {
+                        "name": "branchId",
+                        "in": "path",
+                        "description": "ID of the branch to retrieve details for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "useGroupOverrides",
+                        "in": "query",
+                        "description": "Whether or not to take group level overrides for opening times",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BranchDetailsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/branch/search": {
+            "post": {
+                "tags": [
+                    "Branch"
+                ],
+                "summary": "Gets a paged result of branches based on search filters",
+                "operationId": "Branch_SearchBranches",
+                "requestBody": {
+                    "description": "The search request model",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchBranchesRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchBranchesRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchBranchesRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/SearchBranchesRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BranchIPagedResult"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/downloads": {
+            "get": {
+                "tags": [
+                    "Downloads"
+                ],
+                "summary": "This endpoint downloads the requested document",
+                "operationId": "Downloads_FileDownload",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "Auth key",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/patientreview/search": {
+            "post": {
+                "tags": [
+                    "PatientReview"
+                ],
+                "summary": "Returns reviews, paged, based on selection criteria",
+                "operationId": "PatientReview_PostSearchReviews",
+                "requestBody": {
+                    "description": "Query and paging parameters",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ReviewSearchRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ReviewSearchRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ReviewSearchRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ReviewSearchRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewResponsePagedResult"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/product/skus": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all SKUs available for a given product code",
+                "operationId": "Product_GetSkus",
+                "requestBody": {
+                    "description": "Product code request",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductSkusRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductSkusRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductSkusRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductSkusRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QueryProductSkusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/product/search/{ProductType}": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Search product catalogue based on criteria",
+                "operationId": "Product_Search",
+                "parameters": [
+                    {
+                        "name": "ProductType",
+                        "in": "path",
+                        "description": "Type of product ie \"Frame\"",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/ProductType"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Search criteria",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ProductSearchRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ProductSearchRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ProductSearchRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ProductSearchRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QueryProductDetailsResponseIPagedResult"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/product/prices": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get batch of product prices",
+                "operationId": "Product_GetBatchPrices",
+                "requestBody": {
+                    "description": "A list of products to request prices for",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchProductPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchProductPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchProductPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchProductPriceRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductBatchPriceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/product/retail-prices": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get batch of product retail prices at SKU level, where necessary",
+                "operationId": "Product_GetBatchRetailPrices",
+                "requestBody": {
+                    "description": "A list of price requests for specific products (or product variants) including branch information",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchSkuRetailPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchSkuRetailPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchSkuRetailPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchSkuRetailPriceRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SkuRetailPriceResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sku/stocklevels": {
+            "post": {
+                "tags": [
+                    "Sku"
+                ],
+                "summary": "Get batch of SKU stock levels across all branches",
+                "operationId": "Sku_GetBatchStockLevel",
+                "requestBody": {
+                    "description": "SKU codes to lookup",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchStockBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchStockBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchStockBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchStockBySkuRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchStockResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sku/details": {
+            "post": {
+                "tags": [
+                    "Sku"
+                ],
+                "summary": "Get specific details for a SKU",
+                "operationId": "Sku_GetDetails",
+                "requestBody": {
+                    "description": "SKU code to lookup",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductDetailsBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductDetailsBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductDetailsBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryProductDetailsBySkuRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SkuProductDetails"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sku/prices": {
+            "post": {
+                "tags": [
+                    "Sku"
+                ],
+                "summary": "Get batches of SKU price",
+                "operationId": "Sku_GetBatchPrices",
+                "requestBody": {
+                    "description": "SKU code to lookup",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchSkuPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchSkuPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchSkuPriceRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/QueryBatchSkuPriceRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SkuBatchPriceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sku/updatestocklevelbysku": {
+            "put": {
+                "tags": [
+                    "Sku"
+                ],
+                "summary": "Updates stock level for an individual SKU",
+                "operationId": "Sku_UpdateStockLevelBySku",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchUpdateStockLevelBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchUpdateStockLevelBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchUpdateStockLevelBySkuRequest"
+                                    }
+                                ]
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/BatchUpdateStockLevelBySkuRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchUpdateStockLevelBySkuResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AppointmentTypeResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Appointment type identifier.",
+                        "format": "uuid"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description for this appointment type.",
+                        "nullable": true
+                    },
+                    "eventType": {
+                        "type": "string",
+                        "description": "This is the EventType this AppointmentType is categorised as.",
+                        "nullable": true
+                    },
+                    "appointmentLength": {
+                        "type": "integer",
+                        "description": "The standard length of this AppointmentType in minutes.",
+                        "format": "int32"
+                    },
+                    "isAvailableOnline": {
+                        "type": "boolean",
+                        "description": "Is this AppointmentType available for online booking"
+                    },
+                    "onlineName": {
+                        "type": "string",
+                        "description": "The online name of this appointment Type",
+                        "nullable": true
+                    },
+                    "onlineDescription": {
+                        "type": "string",
+                        "description": "The online description of this appointmenT Type",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AppointmentTypesResponse": {
+                "type": "object",
+                "properties": {
+                    "appointmentTypes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AppointmentTypeResponse"
+                        },
+                        "description": "Appointment Types.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AvailabilityBlock": {
+                "type": "object",
+                "properties": {
+                    "branchId": {
+                        "type": "string",
+                        "description": "The branch this appointment is available for",
+                        "format": "uuid"
+                    },
+                    "appointmentTypeId": {
+                        "type": "string",
+                        "description": "The type of appointment that can be booked",
+                        "format": "uuid"
+                    },
+                    "staffId": {
+                        "type": "string",
+                        "description": "The staff member this appointment is bookable for",
+                        "format": "uuid"
+                    },
+                    "roomId": {
+                        "type": "string",
+                        "description": "Gets or sets the room id for this appointment",
+                        "format": "uuid"
+                    },
+                    "timeSlots": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TimeRange"
+                        },
+                        "description": "The times at which this appointment can be booked",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BatchSkuRetailPriceRequest": {
+                "type": "object",
+                "properties": {
+                    "priceRequests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SkuRetailPriceRequest"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BatchStockResponse": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StockResponse"
+                        },
+                        "description": "Stock results",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BatchUpdateStockLevelBySkuRequest": {
+                "type": "object",
+                "properties": {
+                    "notes": {
+                        "type": "string",
+                        "description": "Notes",
+                        "nullable": true
+                    },
+                    "updateStockLevelBySkuRequests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UpdateStockLevelBySkuRequest"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BatchUpdateStockLevelBySkuResponse": {
+                "type": "object",
+                "properties": {
+                    "successes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UpdateStockLevelBySkuResponse"
+                        },
+                        "description": "Successful responses by SKU ID",
+                        "nullable": true
+                    },
+                    "failures": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FailedUpdateStockLevelBySkuResponse"
+                        },
+                        "description": "Failed responses by SKU ID",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BookInEnumeration": {
+                "enum": [
+                    "Online_Return"
+                ],
+                "type": "string",
+                "additionalProperties": false
+            },
+            "BookOutEnumeration": {
+                "enum": [
+                    "Online_Sale"
+                ],
+                "type": "string",
+                "additionalProperties": false
+            },
+            "Branch": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Gets or sets the branch identifier.",
+                        "format": "uuid"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Gets or sets the branch code",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Gets or sets the name of the branch.",
+                        "nullable": true
+                    },
+                    "telephone1": {
+                        "type": "string",
+                        "description": "Gets or sets the telephone1 number.",
+                        "nullable": true
+                    },
+                    "telephone2": {
+                        "type": "string",
+                        "description": "Gets or sets the telephone2 number.",
+                        "nullable": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Gets or sets the email.",
+                        "nullable": true
+                    },
+                    "onlineFriendlyBranchName": {
+                        "type": "string",
+                        "description": "Gets or sets the Online Friendly Branch Name.",
+                        "nullable": true
+                    },
+                    "addressId": {
+                        "type": "string",
+                        "description": "Gets or sets the address identifier.",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "description": "Gets or sets the branch latitude location",
+                        "format": "decimal",
+                        "nullable": true
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "description": "Gets or sets the branch logitude location",
+                        "format": "decimal",
+                        "nullable": true
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "description": "Gets or sets a value indicating whether this Optix.PublicApi.Models.Branches.Responses.Branch is active.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BranchDetailsResponse": {
+                "type": "object",
+                "properties": {
+                    "openingTimes": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/OpeningTimeResponse"
+                        },
+                        "description": "Gets or sets the branch opening times",
+                        "nullable": true
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Gets or sets the branch identifier.",
+                        "format": "uuid"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Gets or sets the branch code",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Gets or sets the name of the branch.",
+                        "nullable": true
+                    },
+                    "telephone1": {
+                        "type": "string",
+                        "description": "Gets or sets the telephone1 number.",
+                        "nullable": true
+                    },
+                    "telephone2": {
+                        "type": "string",
+                        "description": "Gets or sets the telephone2 number.",
+                        "nullable": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Gets or sets the email.",
+                        "nullable": true
+                    },
+                    "onlineFriendlyBranchName": {
+                        "type": "string",
+                        "description": "Gets or sets the Online Friendly Branch Name.",
+                        "nullable": true
+                    },
+                    "addressId": {
+                        "type": "string",
+                        "description": "Gets or sets the address identifier.",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "description": "Gets or sets the branch latitude location",
+                        "format": "decimal",
+                        "nullable": true
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "description": "Gets or sets the branch logitude location",
+                        "format": "decimal",
+                        "nullable": true
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "description": "Gets or sets a value indicating whether this Optix.PublicApi.Models.Branches.Responses.Branch is active.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BranchIPagedResult": {
+                "type": "object",
+                "properties": {
+                    "totalItems": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Branch"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BranchStock": {
+                "type": "object",
+                "properties": {
+                    "branchCode": {
+                        "type": "string",
+                        "description": "The branch code",
+                        "nullable": true
+                    },
+                    "branchName": {
+                        "type": "string",
+                        "description": "The branch name",
+                        "nullable": true
+                    },
+                    "nonConsignmentStockLevel": {
+                        "type": "integer",
+                        "description": "The non-consignment stock level",
+                        "format": "int32"
+                    },
+                    "consignmentStockLevel": {
+                        "type": "integer",
+                        "description": "The consignment stock level",
+                        "format": "int32"
+                    },
+                    "onOrderStockLevel": {
+                        "type": "integer",
+                        "description": "The on-order stock level",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DiaryEventTypeEnumeration": {
+                "enum": [
+                    "OtherEvent",
+                    "Appointment"
+                ],
+                "type": "string",
+                "additionalProperties": false
+            },
+            "FailedUpdateStockLevelBySkuResponse": {
+                "type": "object",
+                "properties": {
+                    "skuId": {
+                        "type": "string",
+                        "description": "The SKU ID",
+                        "format": "uuid"
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "The Branch ID",
+                        "format": "uuid"
+                    },
+                    "errorMessage": {
+                        "type": "string",
+                        "description": "The error message",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "OpeningTimeResponse": {
+                "type": "object",
+                "properties": {
+                    "openingTime": {
+                        "type": "string",
+                        "description": "Gets the opening time",
+                        "format": "time-span",
+                        "nullable": true,
+                        "example": "00:00:00"
+                    },
+                    "closingTime": {
+                        "type": "string",
+                        "description": "Gets the closing time",
+                        "format": "time-span",
+                        "nullable": true,
+                        "example": "00:00:00"
+                    },
+                    "closed": {
+                        "type": "boolean",
+                        "description": "Gets if the premises is closed on this day",
+                        "nullable": true
+                    },
+                    "weekDayNumber": {
+                        "type": "integer",
+                        "description": "Gets the day of the week",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "day": {
+                        "type": "string",
+                        "description": "Gets the day of week name e.g. 'Saturday'",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ProblemDetails": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "detail": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "instance": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": {}
+            },
+            "ProductBatchPriceResponse": {
+                "type": "object",
+                "properties": {
+                    "prices": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProductPriceResponse"
+                        },
+                        "description": "A list of product prices",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ProductPriceResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "The product code",
+                        "nullable": true
+                    },
+                    "effectivePrice": {
+                        "type": "number",
+                        "description": "The effective price",
+                        "format": "decimal",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ProductSearchRequest": {
+                "type": "object",
+                "properties": {
+                    "active": {
+                        "type": "boolean",
+                        "description": "True to filter only active appointments"
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "description": "Page number to return",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "description": "Number of items per page",
+                        "format": "int32"
+                    },
+                    "orderByDescending": {
+                        "type": "boolean"
+                    },
+                    "productName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "barcode": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "supplier": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "manufacturer": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "brand": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "genericTag": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "frameType": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "material": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "gender": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "category": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "maxDiagonal": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "maxDiagonalMin": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "maxDiagonalMax": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "sideLength": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "sideLengthMin": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "sideLengthMax": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "eyeSize": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "eyeSizeMin": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "eyeSizeMax": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "dbl": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "dblMin": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "dblMax": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "colour": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "glazeable": {
+                        "type": "boolean",
+                        "nullable": true
+                    },
+                    "frameColour": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "lensColour": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "createdDayStart": {
+                        "type": "string",
+                        "description": "Inclusive start point for date filtering on Created Day",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "createdDayEnd": {
+                        "type": "string",
+                        "description": "Inclusive end point for date filtering on Created Day",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDayStart": {
+                        "type": "string",
+                        "description": "Inclusive start point for date filtering on Modified Day",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDayEnd": {
+                        "type": "string",
+                        "description": "Inclusive end point for date filtering on Modified Day",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ProductType": {
+                "enum": [
+                    "Frame",
+                    "Sunglasses",
+                    "Misc Item"
+                ],
+                "type": "string",
+                "additionalProperties": false
+            },
+            "QueryAvailabilityBlocksRequest": {
+                "type": "object",
+                "properties": {
+                    "dateRangeStart": {
+                        "type": "string",
+                        "description": "Gets or sets the date range start",
+                        "format": "date-time"
+                    },
+                    "dateRangeEnd": {
+                        "type": "string",
+                        "description": "Gets or sets the date range end",
+                        "format": "date-time"
+                    },
+                    "appointmentTypeIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "description": "The rooms to return diary availabilities for",
+                        "nullable": true
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "The branches to return diary availabilities for",
+                        "format": "uuid"
+                    },
+                    "onlineAvailabilityOnly": {
+                        "type": "boolean",
+                        "description": "Gets or sets if the availability query should only return online diary availability.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryAvailabilityBlocksResponse": {
+                "type": "object",
+                "properties": {
+                    "blocks": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/AvailabilityBlock"
+                            }
+                        },
+                        "description": "Availability slots keyed by Date.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryBatchProductPriceRequest": {
+                "type": "object",
+                "properties": {
+                    "priceRequests": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryBatchSkuPriceRequest": {
+                "type": "object",
+                "properties": {
+                    "skuIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "nullable": true
+                    },
+                    "codes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "barcodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryBatchStockBySkuRequest": {
+                "type": "object",
+                "properties": {
+                    "createdDayStart": {
+                        "type": "string",
+                        "description": "<inheritdoc />",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "createdDayEnd": {
+                        "type": "string",
+                        "description": "<inheritdoc />",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDayStart": {
+                        "type": "string",
+                        "description": "<inheritdoc />",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDayEnd": {
+                        "type": "string",
+                        "description": "<inheritdoc />",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "skuIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "nullable": true
+                    },
+                    "codes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "barcodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryProductDetailsBySkuRequest": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "barcode": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "skuId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryProductDetailsResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Gets the product id",
+                        "format": "uuid"
+                    },
+                    "productTypeId": {
+                        "type": "string",
+                        "description": "Gets the product type id",
+                        "format": "uuid"
+                    },
+                    "productType": {
+                        "type": "string",
+                        "description": "The product type ID",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The product name",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "The product code",
+                        "nullable": true
+                    },
+                    "barcode": {
+                        "type": "string",
+                        "description": "The product Bar Code",
+                        "nullable": true
+                    },
+                    "suppliers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The product suppliers",
+                        "nullable": true
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The product tags",
+                        "nullable": true
+                    },
+                    "manufacturer": {
+                        "type": "string",
+                        "description": "The manufacturer ID",
+                        "nullable": true
+                    },
+                    "brand": {
+                        "type": "string",
+                        "description": "The Brand ID",
+                        "nullable": true
+                    },
+                    "frameType": {
+                        "type": "string",
+                        "description": "The frame type",
+                        "nullable": true
+                    },
+                    "frameColours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The frame colours",
+                        "nullable": true
+                    },
+                    "lensColours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The lens colours",
+                        "nullable": true
+                    },
+                    "material": {
+                        "type": "string",
+                        "description": "The product material",
+                        "nullable": true
+                    },
+                    "gender": {
+                        "type": "string",
+                        "description": "The gender",
+                        "nullable": true
+                    },
+                    "glazeable": {
+                        "type": "boolean",
+                        "description": "Whether the product is glazeable or not.",
+                        "nullable": true
+                    },
+                    "createdDay": {
+                        "type": "string",
+                        "description": "The day that the product was created",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDay": {
+                        "type": "string",
+                        "description": "The day that the product was updated",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryProductDetailsResponseIPagedResult": {
+                "type": "object",
+                "properties": {
+                    "totalItems": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/QueryProductDetailsResponse"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryProductSkusRequest": {
+                "type": "object",
+                "properties": {
+                    "productCode": {
+                        "type": "string",
+                        "description": "The product code",
+                        "nullable": true
+                    },
+                    "createdDayStart": {
+                        "type": "string",
+                        "description": "Inclusive start point for date filtering on Created Day",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "createdDayEnd": {
+                        "type": "string",
+                        "description": "Inclusive end point for date filtering on Created Day",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDayStart": {
+                        "type": "string",
+                        "description": "Inclusive start point for date filtering on Modified Day",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDayEnd": {
+                        "type": "string",
+                        "description": "Inclusive end point for date filtering on Modified Day",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QueryProductSkusResponse": {
+                "type": "object",
+                "properties": {
+                    "skus": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SkuDetails"
+                        },
+                        "description": "The list of Skus",
+                        "nullable": true
+                    },
+                    "createdDay": {
+                        "type": "string",
+                        "description": "The day that the product was created",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDay": {
+                        "type": "string",
+                        "description": "The day that the product was updated",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ReviewResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Gets or inits the review id",
+                        "format": "uuid"
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "Gets or inits the branch id this review is for",
+                        "format": "uuid"
+                    },
+                    "branchName": {
+                        "type": "string",
+                        "description": "Gets the branch name this review is for.",
+                        "nullable": true
+                    },
+                    "appointmentTypeId": {
+                        "type": "string",
+                        "description": "Gets or inits the appointment type id this review is for",
+                        "format": "uuid"
+                    },
+                    "appointmentTypeDescription": {
+                        "type": "string",
+                        "description": "Gets the appointment type description this review is for.",
+                        "nullable": true
+                    },
+                    "appointmentTypeOnlineName": {
+                        "type": "string",
+                        "description": "Gets the appointment type online name this review is for.",
+                        "nullable": true
+                    },
+                    "reviewDate": {
+                        "type": "string",
+                        "description": "Gets or inits the review date",
+                        "format": "date-time"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "description": "Gets or inits frist nanme of the person completing the review",
+                        "nullable": true
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "description": "Gets or inits last nanme of the person completing the review",
+                        "nullable": true
+                    },
+                    "reviewAnswer": {
+                        "type": "string",
+                        "description": "Gets or inits the review answer",
+                        "nullable": true
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "description": "Gets or inits the review rating",
+                        "format": "int32"
+                    },
+                    "score": {
+                        "type": "integer",
+                        "description": "Gets or inits the primary NPS score",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "An Optix review"
+            },
+            "ReviewResponsePagedResult": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReviewResponse"
+                        },
+                        "nullable": true
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalItems": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ReviewSearchRequest": {
+                "type": "object",
+                "properties": {
+                    "reviewIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "nullable": true
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReviewStatuses"
+                        },
+                        "nullable": true
+                    },
+                    "pxFirstName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "pxLastName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "pxPublicId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "pxIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "nullable": true
+                    },
+                    "appointmentId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "appointmentDateFrom": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "appointmentDateTo": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "appointmentTypeId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true,
+                        "deprecated": true
+                    },
+                    "appointmentTypeIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "nullable": true
+                    },
+                    "reviewDateFrom": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "reviewDateTo": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "ratings": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "nullable": true
+                    },
+                    "scores": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "nullable": true
+                    },
+                    "branchIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "nullable": true
+                    },
+                    "staffId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "bookingStaffId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "sortByColumn": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "sortOrder": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ReviewStatuses": {
+                "enum": [
+                    "ToBeSent",
+                    "PendingApproval",
+                    "HeldInternally",
+                    "OptixInvestigating",
+                    "Approved",
+                    "Cancelled",
+                    "RemovedReSent",
+                    "ReviewRequested",
+                    "RequestExpired",
+                    "OptixApproved",
+                    "OptixRejected",
+                    "NotSentTooRecent",
+                    "PartiallyCompleted"
+                ],
+                "type": "string"
+            },
+            "SearchAppointmentTypesRequest": {
+                "type": "object",
+                "properties": {
+                    "branchId": {
+                        "type": "string",
+                        "description": "Gets or Sets branch ID for what appointment types should be returned.",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "excludeGlobalAppointmentTypes": {
+                        "type": "boolean",
+                        "description": "Gets or sets if appointment types unassigned from any branch should be returned.",
+                        "nullable": true
+                    },
+                    "onlyAvailableOnlineAppointmentTypes": {
+                        "type": "boolean",
+                        "description": "Gets or sets if only appointment types that are available online should be returned.",
+                        "nullable": true
+                    },
+                    "includeEventTypes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DiaryEventTypeEnumeration"
+                        },
+                        "description": "Gets or sets the event types to return.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SearchBranchesRequest": {
+                "type": "object",
+                "properties": {
+                    "pageNumber": {
+                        "type": "integer",
+                        "description": "Page number to return",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "description": "Number of items per page",
+                        "format": "int32"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "description": "Requested active status of branches",
+                        "nullable": true
+                    },
+                    "brandingId": {
+                        "type": "string",
+                        "description": "Branding ID to filter by if needed: empty guid would reflect wanting to return the branches\r\nwith group level branding (which is null in the db) as opposed to leaving this null if want\r\nall branches regardless of branding ID",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "branchIdFilter": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "description": "Gets or sets a collection of branch ids to filter results by",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SkuBatchPriceResponse": {
+                "type": "object",
+                "properties": {
+                    "prices": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SkuPriceResponse"
+                        },
+                        "description": "The list of SKUs and their prices",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SkuDetails": {
+                "type": "object",
+                "properties": {
+                    "skuId": {
+                        "type": "string",
+                        "description": "The sku's unique identifier",
+                        "format": "uuid"
+                    },
+                    "barcode": {
+                        "type": "string",
+                        "description": "The sku's barcode",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "The sku's code",
+                        "nullable": true
+                    },
+                    "frameColour": {
+                        "type": "string",
+                        "description": "The sku's frame colour",
+                        "nullable": true
+                    },
+                    "eyeSize": {
+                        "type": "string",
+                        "description": "The sku's eye size",
+                        "nullable": true
+                    },
+                    "dbl": {
+                        "type": "string",
+                        "description": "The sku's Dbl",
+                        "nullable": true
+                    },
+                    "armLength": {
+                        "type": "string",
+                        "description": "The sku's arm length",
+                        "nullable": true
+                    },
+                    "maxDiagonal": {
+                        "type": "string",
+                        "description": "The sku's max diagonal",
+                        "nullable": true
+                    },
+                    "lensColour": {
+                        "type": "string",
+                        "description": "The sku's lens colour",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SkuPriceResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "The SKU's code",
+                        "nullable": true
+                    },
+                    "effectivePrice": {
+                        "type": "number",
+                        "description": "The effective price",
+                        "format": "decimal",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SkuProductDetails": {
+                "type": "object",
+                "properties": {
+                    "frameType": {
+                        "type": "string",
+                        "description": "The frame type",
+                        "nullable": true
+                    },
+                    "productType": {
+                        "type": "string",
+                        "description": "The product type",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name",
+                        "nullable": true
+                    },
+                    "manufacturer": {
+                        "type": "string",
+                        "description": "The manufacturer",
+                        "nullable": true
+                    },
+                    "brand": {
+                        "type": "string",
+                        "description": "The brand",
+                        "nullable": true
+                    },
+                    "material": {
+                        "type": "string",
+                        "description": "The material",
+                        "nullable": true
+                    },
+                    "gender": {
+                        "type": "string",
+                        "description": "The gender",
+                        "nullable": true
+                    },
+                    "supplierCode": {
+                        "type": "string",
+                        "description": "The supplier code",
+                        "nullable": true
+                    },
+                    "skuId": {
+                        "type": "string",
+                        "description": "The sku's unique identifier",
+                        "format": "uuid"
+                    },
+                    "barcode": {
+                        "type": "string",
+                        "description": "The sku's barcode",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "The sku's code",
+                        "nullable": true
+                    },
+                    "frameColour": {
+                        "type": "string",
+                        "description": "The sku's frame colour",
+                        "nullable": true
+                    },
+                    "eyeSize": {
+                        "type": "string",
+                        "description": "The sku's eye size",
+                        "nullable": true
+                    },
+                    "dbl": {
+                        "type": "string",
+                        "description": "The sku's Dbl",
+                        "nullable": true
+                    },
+                    "armLength": {
+                        "type": "string",
+                        "description": "The sku's arm length",
+                        "nullable": true
+                    },
+                    "maxDiagonal": {
+                        "type": "string",
+                        "description": "The sku's max diagonal",
+                        "nullable": true
+                    },
+                    "lensColour": {
+                        "type": "string",
+                        "description": "The sku's lens colour",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SkuRetailPriceRequest": {
+                "required": [
+                    "branchId",
+                    "productId",
+                    "productTypeId"
+                ],
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "string",
+                        "description": "The ID of the product in question as GUID",
+                        "format": "uuid"
+                    },
+                    "variantId": {
+                        "type": "string",
+                        "description": "The ID of the SKU when requesting a product type that has SKU management as a GUID",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "The Id of the Branch as GUID",
+                        "format": "uuid"
+                    },
+                    "productTypeId": {
+                        "type": "string",
+                        "description": "The Id of the product type (Sunglasses, Frames, CL, etc.) as GUID",
+                        "format": "uuid"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SkuRetailPriceResponse": {
+                "required": [
+                    "branchId",
+                    "cost",
+                    "productId",
+                    "retailPrice"
+                ],
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "string",
+                        "description": "The unique GUID of the product.",
+                        "format": "uuid"
+                    },
+                    "variantId": {
+                        "type": "string",
+                        "description": "The SkuId / VariantId of the product, if applicable",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "The unique Id of the branch that the product belongs to.",
+                        "format": "uuid"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "description": "The cost of the product.",
+                        "format": "decimal"
+                    },
+                    "retailPrice": {
+                        "type": "number",
+                        "description": "The retail price of the product.",
+                        "format": "decimal"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "StockResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "The stock's code",
+                        "nullable": true
+                    },
+                    "branchStocks": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BranchStock"
+                        },
+                        "description": "List of branch related stock levels",
+                        "nullable": true
+                    },
+                    "createdDay": {
+                        "type": "string",
+                        "description": "Created Day of the sku",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "modifiedDay": {
+                        "type": "string",
+                        "description": "Last modified day of the sku",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "supplierCode": {
+                        "type": "string",
+                        "description": "The supplier code of the sku.",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "TimeRange": {
+                "type": "object",
+                "properties": {
+                    "startTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "format": "time-span",
+                        "readOnly": true,
+                        "example": "00:00:00"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "UpdateStockLevelBySkuRequest": {
+                "type": "object",
+                "properties": {
+                    "bookInReason": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/BookInEnumeration"
+                            }
+                        ],
+                        "description": "The book in reason. Only accepts Online_Return",
+                        "nullable": true
+                    },
+                    "bookOutReason": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/BookOutEnumeration"
+                            }
+                        ],
+                        "description": "The book out reason. Only accepts Online_Sale",
+                        "nullable": true
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "description": "The quantity to increase / decrease by",
+                        "format": "int32"
+                    },
+                    "skuId": {
+                        "type": "string",
+                        "description": "The relevant SKU ID",
+                        "format": "uuid"
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "The relevant Branch ID",
+                        "format": "uuid"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "UpdateStockLevelBySkuResponse": {
+                "type": "object",
+                "properties": {
+                    "skuId": {
+                        "type": "string",
+                        "description": "The SKU ID",
+                        "format": "uuid"
+                    },
+                    "branchId": {
+                        "type": "string",
+                        "description": "The Branch ID",
+                        "format": "uuid"
+                    },
+                    "nonConsignmentStockLevelFrom": {
+                        "type": "integer",
+                        "description": "The original non consignment stock level",
+                        "format": "int32"
+                    },
+                    "nonConsignmentStockLevelTo": {
+                        "type": "integer",
+                        "description": "The new non consignment stock level",
+                        "format": "int32"
+                    },
+                    "consignmentStockLevelFrom": {
+                        "type": "integer",
+                        "description": "The original consignment stock level",
+                        "format": "int32"
+                    },
+                    "consignmentStockLevelTo": {
+                        "type": "integer",
+                        "description": "The new consignment stock level",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ValidationProblemDetails": {
+                "type": "object",
+                "properties": {
+                    "errors": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "nullable": true
+                    },
+                    "type": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "detail": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "instance": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": {}
+            }
+        },
+        "securitySchemes": {
+            "X-OPTIX-API-KEY-V2": {
+                "type": "apiKey",
+                "description": "X-OPTIX-API-KEY-V2 passed in via the headers",
+                "name": "X-OPTIX-API-KEY-V2",
+                "in": "header"
+            },
+            "Tenant-id": {
+                "type": "apiKey",
+                "description": "Tenant-id passed in via the headers",
+                "name": "Tenant-id",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "X-OPTIX-API-KEY-V2": []
+        },
+        {
+            "Tenant-id": []
+        }
+    ]
+}
