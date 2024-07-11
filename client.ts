@@ -13,10 +13,12 @@ function mkAuthMiddleware(apiKey: string): Middleware {
 
 export function newClient(apiKey: string) {
   const client = createClient<paths>({
-    baseUrl: 'https://publicapi.optix.co.uk/v1/',
+    baseUrl: 'https://publicapi.optix.co.uk/',
   })
   const authMiddleware = mkAuthMiddleware(apiKey)
 
   client.use(authMiddleware)
   return client
 }
+
+
