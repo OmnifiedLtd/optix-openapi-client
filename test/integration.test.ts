@@ -3,7 +3,7 @@ import { newClient } from '../client'
 import { ProductSearchInput, ProductType, searchProducts } from '../product'
 import 'dotenv/config'
 
-test('1==1', async () => {
+test('search products', async () => {
   const apiKey = process.env.OPTIX_API_KEY!
   const client = newClient(apiKey)
   const input: ProductSearchInput = {
@@ -12,6 +12,18 @@ test('1==1', async () => {
   }
   const response = await searchProducts(client, input)
   console.log(response)
-  console.log(response.data)
+  expect(1).toEqual(1)
+})
+
+
+test('unauthorized error', async () => {
+  const apiKey = "invalidApiKey"
+  const client = newClient(apiKey)
+  const input: ProductSearchInput = {
+    productType: ProductType.Sunglasses,
+    pageSize: 2
+  }
+  const response = await searchProducts(client, input)
+  console.log(response)
   expect(1).toEqual(1)
 })
