@@ -9,11 +9,9 @@ export enum ProductType {
 }
 
 export type ProductSearchRequest = components['schemas']['ProductSearchRequest']
-
 export type ProductSearchInput = ProductSearchRequest & {
   productType: ProductType
 }
-
 export type ProductSearchResponse = components['schemas']['QueryProductDetailsResponseIPagedResult']
 
 export async function searchProducts(
@@ -38,4 +36,70 @@ export async function searchProductsExn(
   const response = await searchProducts(client, input)
   return toExn(response)
 }
+
+
+export type ProductGetSkusInput = components['schemas']['QueryProductSkusRequest']
+export type ProductGetSkusResponse = components['schemas']['QueryProductSkusResponse']
+
+export async function productGetSkus(
+  client: ReturnType<typeof newClient>,
+  input: ProductGetSkusInput
+): Promise<ApiResponse<ProductGetSkusResponse>> {
+  const response = await client.POST('/v1/product/skus', {
+    body: input,
+  })
+  return fromClientResponse(response)
+}
+
+export async function productGetSkusExn(
+  client: ReturnType<typeof newClient>,
+  input: ProductGetSkusInput
+): Promise<ProductGetSkusResponse> {
+  const response = await productGetSkus(client, input)
+  return toExn(response)
+}
+
+export type ProductGetPricesInput = components['schemas']['QueryBatchProductPriceRequest']
+export type ProductGetPricesResponse = components['schemas']['ProductBatchPriceResponse']
+
+export async function productGetPrices(
+  client: ReturnType<typeof newClient>,
+  input: ProductGetPricesInput
+): Promise<ApiResponse<ProductGetPricesResponse>> {
+  const response = await client.POST('/v1/product/prices', {
+    body: input,
+  })
+  return fromClientResponse(response)
+}
+
+export async function productGetPricesExn(
+  client: ReturnType<typeof newClient>,
+  input: ProductGetPricesInput
+): Promise<ProductGetPricesResponse> {
+  const response = await productGetPrices(client, input)
+  return toExn(response)
+}
+
+export type ProductGetRetailPricesInput = components['schemas']['BatchSkuRetailPriceRequest']
+export type ProductGetRetailPricesResponse = components['schemas']['SkuRetailPriceResponse'][]
+
+export async function productGetRetailPrices(
+  client: ReturnType<typeof newClient>,
+  input: ProductGetRetailPricesInput
+): Promise<ApiResponse<ProductGetRetailPricesResponse>> {
+  const response = await client.POST('/v1/product/retail-prices', {
+    body: input,
+  })
+  return fromClientResponse(response)
+}
+
+export async function productGetRetailPricesExn(
+  client: ReturnType<typeof newClient>,
+  input: ProductGetRetailPricesInput
+): Promise<ProductGetRetailPricesResponse> {
+  const response = await productGetRetailPrices(client, input)
+  return toExn(response)
+}
+
+
 
