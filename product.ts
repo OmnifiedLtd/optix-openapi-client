@@ -8,7 +8,7 @@ export enum ProductType {
   MiscItem = 'Misc Item',
 }
 
-type ProductSearchRequest = components['schemas']['ProductSearchRequest']
+export type ProductSearchRequest = components['schemas']['ProductSearchRequest']
 
 export type ProductSearchInput = ProductSearchRequest & {
   productType: ProductType
