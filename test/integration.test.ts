@@ -13,7 +13,6 @@ test('search products', async () => {
     pageSize: 2
   }
   const response = await searchProducts(client, input)
-  console.log(response)
   expect(response.apiResponseType).toEqual(ApiResponseType.Success)
 })
 
@@ -25,7 +24,6 @@ test('unauthorized error', async () => {
     pageSize: 2
   }
   const response = await searchProducts(client, input)
-  console.log(response)
   expect(response.apiResponseType).toEqual(ApiResponseType.Error)
   const { error } = response as ApiErrorResponse
   expect(error.type).toEqual(ErrorType.Unauthorized)
@@ -38,7 +36,6 @@ test('bad request error', async () => {
     productTipe: ProductType.Sunglasses,
   } as any
   const response = await searchProducts(client, badInput)
-  console.log(response)
   expect(response.apiResponseType).toEqual(ApiResponseType.Error)
   const { error } = response as ApiErrorResponse
 
