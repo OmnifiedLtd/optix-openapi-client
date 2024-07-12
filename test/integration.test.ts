@@ -41,9 +41,19 @@ test('bad request error', async () => {
   expect(error.type).toEqual('Bad Request')
 })
 
-test('product/sku operations', async () => {
+test('branch/product/sku operations', async () => {
   const apiKey = process.env.OPTIX_API_KEY!
   const client = newLiveClient(apiKey)
+  const branches = await client.branchesSearchExn({
+    pageSize: 2
+  })
+  const branch = branches.items![0]
+  if (!branch) {
+    throw new Error("No branch found")
+  }
+  await client.branchGetDetailsExn({
+    branchId: branch.id!
+  })
   const productSearchInput = {
     productType: ProductType.Sunglasses,
     pageSize: 2
@@ -60,19 +70,19 @@ test('product/sku operations', async () => {
   if (!sku) {
     throw new Error("No sku found for test product")
   }
-  const skuStockLevels = await client.skuGetStockLevelsExn({
+  await client.skuGetStockLevelsExn({
     skuIds: [sku.skuId!],
   })
-  // const skuPrices = await client.productGetRetailPricesExn({
-  //   priceRequests: [
-  //     {
-  //       productId: product.id!,
-  //       variantId: sku.skuId,
-  //       branchId: ,
-  //       productTypeId: product.productTypeId!,
-  //     }
-  // })
-  // console.log(skuStockLevels)
+  await client.productGetRetailPricesExn({
+    priceRequests: [
+      {
+        productId: product.id!,
+        variantId: sku.skuId,
+        branchId: branch.id!,
+        productTypeId: product.productTypeId!,
+      }
+    ]
+  })
   expect(1).toEqual(1)
 }
 )
