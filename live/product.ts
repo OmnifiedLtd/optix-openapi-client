@@ -80,7 +80,12 @@ export async function productGetPricesExn(
   return toExn(response)
 }
 
-export type ProductGetRetailPricesInput = components['schemas']['BatchSkuRetailPriceRequest']
+
+export type SkuRetailPriceRequest = components['schemas']['SkuRetailPriceRequest']
+
+export type ProductGetRetailPricesInput = {
+  priceRequests?: SkuRetailPriceRequest[]
+}
 export type ProductGetRetailPricesResponse = components['schemas']['SkuRetailPriceResponse'][]
 
 export async function productGetRetailPrices(

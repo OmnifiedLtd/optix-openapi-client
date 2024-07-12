@@ -2,8 +2,13 @@ import { productGetPrices, productGetPricesExn, ProductGetPricesInput, ProductGe
 import { ApiResponse } from "./response"
 import { skuGetDetails, skuGetDetailsExn, SkuGetDetailsInput, SkuGetDetailsResponse, skuGetPrices, skuGetPricesExn, SkuGetPricesInput, SkuGetPricesResponse, skuGetStockLevels, skuGetStockLevelsExn, SkuGetStockLevelsInput, SkuGetStockLevelsResponse, skuUpdateStockLevelBySku, skuUpdateStockLevelBySkuExn, SkuUpdateStockLevelBySkuInput, SkuUpdateStockLevelBySkuResponse } from "./live/sku"
 import { newAuthenticatedClient } from "./live/client"
+import { BranchDetailsRequest, BranchDetailsResponse, branchesSearch, branchesSearchExn, branchGetDetails, branchGetDetailsExn, BranchSearchRequest, BranchSearchResponse } from "./live/branch"
 
 export type OptixApiClient = {
+  branchGetDetails: (input: BranchDetailsRequest) => Promise<ApiResponse<BranchDetailsResponse>>
+  branchGetDetailsExn: (input: BranchDetailsRequest) => Promise<BranchDetailsResponse>
+  branchesSearch: (input: BranchSearchRequest) => Promise<ApiResponse<BranchSearchResponse>>
+  branchesSearchExn: (input: BranchSearchRequest) => Promise<BranchSearchResponse>
   productGetSkus: (input: ProductGetSkusInput) => Promise<ApiResponse<ProductGetSkusResponse>>
   productGetSkusExn: (input: ProductGetSkusInput) => Promise<ProductGetSkusResponse>
   productGetPrices: (input: ProductGetPricesInput) => Promise<ApiResponse<ProductGetPricesResponse>>
@@ -25,6 +30,10 @@ export type OptixApiClient = {
 export function newLiveClient(apiKey: string): OptixApiClient {
   const authenticatedClient = newAuthenticatedClient(apiKey)
   return {
+    branchGetDetails: (input) => branchGetDetails(authenticatedClient, input),
+    branchGetDetailsExn: (input) => branchGetDetailsExn(authenticatedClient, input),
+    branchesSearch: (input) => branchesSearch(authenticatedClient, input),
+    branchesSearchExn: (input) => branchesSearchExn(authenticatedClient, input),
     productGetSkus: (input) => productGetSkus(authenticatedClient, input),
     productGetSkusExn: (input) => productGetSkusExn(authenticatedClient, input),
     productGetPrices: (input) => productGetPrices(authenticatedClient, input),
