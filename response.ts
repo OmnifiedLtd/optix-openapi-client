@@ -7,12 +7,16 @@ export enum ApiResponseType {
 
 export type ApiSuccessResponse<T> = {
   apiResponseType: ApiResponseType.Success
-  data: T
+  data: T,
+  // The raw response from the api
+  response: Response
 }
 
 export type ApiErrorResponse = {
-  apiResponseType: ApiResponseType.Error
-  error: ApiError
+  apiResponseType: ApiResponseType.Error,
+  error: ApiError,
+  // The raw response from the api
+  response: Response
 }
 
 export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
@@ -20,7 +24,7 @@ export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
 export type ClientResponse<T> = {
   data?: T;
   error?: ClientError;
-  response?: Response;
+  response: Response;
 }
 
 export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<T> {
@@ -34,13 +38,15 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
         status: response.response?.status,
         detail: response.response?.statusText,
         instance: response.response?.url,
-      }
+      },
+      response: response.response,
     }
   }
   if (response.data) {
     return {
       apiResponseType: ApiResponseType.Success,
       data: response.data,
+      response: response.response,
     }
   }
   if (response.error) {
@@ -48,6 +54,7 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
     return {
       apiResponseType: ApiResponseType.Error,
       error: error,
+      response: response.response,
     }
   } else {
     // this should never happen
@@ -56,7 +63,8 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
       error: {
         type: ErrorType.Generic,
         title: "No data or error returned from api",
-      }
+      },
+      response: response.response,
     }
   }
 }
