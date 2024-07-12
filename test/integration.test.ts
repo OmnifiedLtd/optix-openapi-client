@@ -2,6 +2,8 @@ import { expect, test } from 'vitest'
 import { newClient } from '../client'
 import { ProductSearchInput, ProductType, searchProducts } from '../product'
 import 'dotenv/config'
+import { ApiErrorResponse, ApiResponseType } from '../response'
+import { ErrorType } from '../error'
 
 test('search products', async () => {
   const apiKey = process.env.OPTIX_API_KEY!
@@ -12,9 +14,8 @@ test('search products', async () => {
   }
   const response = await searchProducts(client, input)
   console.log(response)
-  expect(1).toEqual(1)
+  expect(response.apiResponseType).toEqual(ApiResponseType.Success)
 })
-
 
 test('unauthorized error', async () => {
   const apiKey = "invalidApiKey"
@@ -25,5 +26,21 @@ test('unauthorized error', async () => {
   }
   const response = await searchProducts(client, input)
   console.log(response)
-  expect(1).toEqual(1)
+  expect(response.apiResponseType).toEqual(ApiResponseType.Error)
+  const { error } = response as ApiErrorResponse
+  expect(error.type).toEqual(ErrorType.Unauthorized)
+})
+
+test('bad request error', async () => {
+  const apiKey = process.env.OPTIX_API_KEY!
+  const client = newClient(apiKey)
+  const badInput: ProductSearchInput = {
+    productTipe: ProductType.Sunglasses,
+  } as any
+  const response = await searchProducts(client, badInput)
+  console.log(response)
+  expect(response.apiResponseType).toEqual(ApiResponseType.Error)
+  const { error } = response as ApiErrorResponse
+
+  expect(error.type).toEqual(ErrorType.BadRequest)
 })

@@ -1,14 +1,19 @@
 import { components } from "./generated"
 
 export enum ErrorType {
-  Unauthorized = 'Unauthorized',
+  BadRequest = 'Bad Request',
   Forbidden = 'Forbidden',
   NotFound = 'Not Found',
+  Unauthorized = 'Unauthorized',
   // Catch all
   Generic = 'Generic'
 }
 
 type ProblemDetails = components['schemas']['ProblemDetails']
+
+type BadRequestError = {
+  type: ErrorType.BadRequest
+} & ProblemDetails
 
 type UnauthorizedError = {
   type: ErrorType.Unauthorized
@@ -32,9 +37,10 @@ type GenericError = {
 }
 
 export type ApiError =
-  UnauthorizedError
+  BadRequestError
   | ForbiddenError
   | NotFoundError
+  | UnauthorizedError
   | GenericError
 
 export type ClientError = {
@@ -46,7 +52,6 @@ export type ClientError = {
 }
 
 export function fromClientError(error: ClientError): ApiError {
-  console.log("client error", error)
   if (error.type === ErrorType.Unauthorized) {
     return {
       type: ErrorType.Unauthorized,

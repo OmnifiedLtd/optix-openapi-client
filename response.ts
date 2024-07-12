@@ -28,13 +28,25 @@ export type ClientResponse<T> = {
 }
 
 export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<T> {
-  console.log("response", response)
   if (response.response?.status === 401) {
     return {
       apiResponseType: ApiResponseType.Error,
       error: {
         type: ErrorType.Unauthorized,
         title: "Unauthorized",
+        status: response.response?.status,
+        detail: response.response?.statusText,
+        instance: response.response?.url,
+      },
+      response: response.response,
+    }
+  }
+  if (response.response?.status === 400) {
+    return {
+      apiResponseType: ApiResponseType.Error,
+      error: {
+        type: ErrorType.BadRequest,
+        title: "Bad Request",
         status: response.response?.status,
         detail: response.response?.statusText,
         instance: response.response?.url,
