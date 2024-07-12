@@ -14,3 +14,8 @@ Generated with <https://openapi-ts.dev/introduction>
 ```
 OPTIX_API_KEY="<your api key>"
 ```
+
+
+## TODOs
+
+- [ ]  make default page size of 100
