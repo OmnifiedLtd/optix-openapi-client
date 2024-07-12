@@ -88,15 +88,3 @@ export function fromClientError(error: ClientError): ApiError {
   }
 }
 
-// TODO: improve this to include more information
-export function throwError(error: ApiError): void {
-  if (error.type === ErrorType.Unauthorized) {
-    throw new Error("Unauthorized")
-  } else if (error.type === ErrorType.Forbidden) {
-    throw new Error("Forbidden")
-  } else if (error.type === ErrorType.NotFound) {
-    throw new Error("Not Found")
-  } else if (error.type === ErrorType.Generic) {
-    throw new Error("Generic Error")
-  }
-}

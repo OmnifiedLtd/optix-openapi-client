@@ -1,21 +1,15 @@
-import { ApiError, ClientError, ErrorType, fromClientError, throwError } from "./error"
+import { ApiError, ClientError, ErrorType, fromClientError } from "./error"
 
-export enum ApiResponseType {
-  Success = "Success",
-  Error = "Error",
-}
 
 export type ApiSuccessResponse<T> = {
-  apiResponseType: ApiResponseType.Success
-  data: T,
-  // The raw response from the api
+  apiResponseType: "success"
+  data: T
   response: Response
 }
 
 export type ApiErrorResponse = {
-  apiResponseType: ApiResponseType.Error,
-  error: ApiError,
-  // The raw response from the api
+  apiResponseType: "error"
+  error: ApiError
   response: Response
 }
 
@@ -24,13 +18,13 @@ export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
 export type ClientResponse<T> = {
   data?: T;
   error?: ClientError;
-  response: Response;
+  response: Response
 }
 
 export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<T> {
   if (response.response?.status === 401) {
     return {
-      apiResponseType: ApiResponseType.Error,
+      apiResponseType: 'error',
       error: {
         type: ErrorType.Unauthorized,
         title: "Unauthorized",
@@ -43,7 +37,7 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   }
   if (response.response?.status === 400) {
     return {
-      apiResponseType: ApiResponseType.Error,
+      apiResponseType: 'error',
       error: {
         type: ErrorType.BadRequest,
         title: "Bad Request",
@@ -56,7 +50,7 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   }
   if (response.data) {
     return {
-      apiResponseType: ApiResponseType.Success,
+      apiResponseType: 'success',
       data: response.data,
       response: response.response,
     }
@@ -64,14 +58,14 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   if (response.error) {
     const error = fromClientError(response.error)
     return {
-      apiResponseType: ApiResponseType.Error,
+      apiResponseType: 'error',
       error: error,
       response: response.response,
     }
   } else {
     // this should never happen
     return {
-      apiResponseType: ApiResponseType.Error,
+      apiResponseType: 'error',
       error: {
         type: ErrorType.Generic,
         title: "No data or error returned from api",
@@ -83,11 +77,19 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
 
 export function toExn<T>(response: ApiResponse<T>): T {
   switch (response.apiResponseType) {
-    case ApiResponseType.Error:
-      throwError(response.error)
-    case ApiResponseType.Success:
-      // TODO: why does TS not infer this?
-      const { data } = response as ApiSuccessResponse<T>
-      return data
+    case 'success':
+      return response.data
+    case 'error':
+      const error = response.error
+      if (error.type === ErrorType.Unauthorized) {
+        throw new Error("Unauthorized")
+      } else if (error.type === ErrorType.Forbidden) {
+        throw new Error("Forbidden")
+      } else if (error.type === ErrorType.NotFound) {
+        throw new Error("Not Found")
+      } else if (error.type === ErrorType.Generic) {
+        throw new Error("Generic Error")
+      }
+      throw new Error("Unknown Error")
   }
 }
