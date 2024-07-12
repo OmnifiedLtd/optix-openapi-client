@@ -1,14 +1,14 @@
-import { ApiError, ClientError, ErrorType, fromClientError } from "./error"
+import { ApiError, ClientError, fromClientError } from "./error"
 
 
 export type ApiSuccessResponse<T> = {
-  apiResponseType: "success"
+  type: "Success"
   data: T
   response: Response
 }
 
 export type ApiErrorResponse = {
-  apiResponseType: "error"
+  type: "Error"
   error: ApiError
   response: Response
 }
@@ -24,10 +24,10 @@ export type ClientResponse<T> = {
 export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<T> {
   if (response.response?.status === 401) {
     return {
-      apiResponseType: 'error',
+      type: 'Error',
       error: {
-        type: ErrorType.Unauthorized,
-        title: "Unauthorized",
+        type: 'Unauthorized',
+        title: 'Unauthorized',
         status: response.response?.status,
         detail: response.response?.statusText,
         instance: response.response?.url,
@@ -37,10 +37,10 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   }
   if (response.response?.status === 400) {
     return {
-      apiResponseType: 'error',
+      type: 'Error',
       error: {
-        type: ErrorType.BadRequest,
-        title: "Bad Request",
+        type: 'Bad Request',
+        title: 'Bad Request',
         status: response.response?.status,
         detail: response.response?.statusText,
         instance: response.response?.url,
@@ -50,7 +50,7 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   }
   if (response.data) {
     return {
-      apiResponseType: 'success',
+      type: 'Success',
       data: response.data,
       response: response.response,
     }
@@ -58,16 +58,16 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   if (response.error) {
     const error = fromClientError(response.error)
     return {
-      apiResponseType: 'error',
+      type: 'Error',
       error: error,
       response: response.response,
     }
   } else {
     // this should never happen
     return {
-      apiResponseType: 'error',
+      type: 'Error',
       error: {
-        type: ErrorType.Generic,
+        type: 'Generic',
         title: "No data or error returned from api",
       },
       response: response.response,
@@ -75,20 +75,22 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   }
 }
 
+// TODO: add more info to errors
 export function toExn<T>(response: ApiResponse<T>): T {
-  switch (response.apiResponseType) {
-    case 'success':
+  switch (response.type) {
+    case 'Success':
       return response.data
-    case 'error':
+    case 'Error':
       const error = response.error
-      if (error.type === ErrorType.Unauthorized) {
-        throw new Error("Unauthorized")
-      } else if (error.type === ErrorType.Forbidden) {
-        throw new Error("Forbidden")
-      } else if (error.type === ErrorType.NotFound) {
-        throw new Error("Not Found")
-      } else if (error.type === ErrorType.Generic) {
-        throw new Error("Generic Error")
+      switch (error.type) {
+        case 'Unauthorized':
+          throw new Error("Unauthorized")
+        case 'Forbidden':
+          throw new Error("Forbidden")
+        case 'Not Found':
+          throw new Error("Not Found")
+        case 'Generic':
+          throw new Error("Generic Error")
       }
       throw new Error("Unknown Error")
   }

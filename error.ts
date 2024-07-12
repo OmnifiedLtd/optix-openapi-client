@@ -1,34 +1,25 @@
 import { components } from "./generated"
 
-export enum ErrorType {
-  BadRequest = 'Bad Request',
-  Forbidden = 'Forbidden',
-  NotFound = 'Not Found',
-  Unauthorized = 'Unauthorized',
-  // Catch all
-  Generic = 'Generic'
-}
-
 type ProblemDetails = components['schemas']['ProblemDetails']
 
 type BadRequestError = {
-  type: ErrorType.BadRequest
+  type: 'Bad Request'
 } & ProblemDetails
 
 type UnauthorizedError = {
-  type: ErrorType.Unauthorized
+  type: 'Unauthorized'
 } & ProblemDetails
 
 type ForbiddenError = {
-  type: ErrorType.Forbidden
+  type: 'Forbidden'
 } & ProblemDetails
 
 type NotFoundError = {
-  type: ErrorType.NotFound
+  type: 'Not Found'
 } & ProblemDetails
 
 type GenericError = {
-  type: ErrorType.Generic,
+  type: 'Generic',
   clientErrorType?: string | null;
   title?: string | null;
   status?: number | null;
@@ -52,25 +43,25 @@ export type ClientError = {
 }
 
 export function fromClientError(error: ClientError): ApiError {
-  if (error.type === ErrorType.Unauthorized) {
+  if (error.status === 401) {
     return {
-      type: ErrorType.Unauthorized,
+      type: 'Unauthorized',
       title: error.title,
       status: error.status,
       detail: error.detail,
       instance: error.instance,
     }
-  } else if (error.type === ErrorType.Forbidden) {
+  } else if (error.status === 403) {
     return {
-      type: ErrorType.Forbidden,
+      type: 'Forbidden',
       title: error.title,
       status: error.status,
       detail: error.detail,
       instance: error.instance,
     }
-  } else if (error.type === ErrorType.NotFound) {
+  } else if (error.status === 404) {
     return {
-      type: ErrorType.NotFound,
+      type: 'Not Found',
       title: error.title,
       status: error.status,
       detail: error.detail,
@@ -78,7 +69,7 @@ export function fromClientError(error: ClientError): ApiError {
     }
   } else {
     return {
-      type: ErrorType.Generic,
+      type: 'Generic',
       clientErrorType: error.type,
       detail: error.detail,
       title: error.title,

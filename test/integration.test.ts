@@ -3,7 +3,6 @@ import { newClient } from '../client'
 import { ProductSearchInput, ProductType, searchProducts } from '../product'
 import 'dotenv/config'
 import { ApiErrorResponse } from '../response'
-import { ErrorType } from '../error'
 
 test('search products', async () => {
   const apiKey = process.env.OPTIX_API_KEY!
@@ -13,7 +12,7 @@ test('search products', async () => {
     pageSize: 2
   }
   const response = await searchProducts(client, input)
-  expect(response.apiResponseType).toEqual('success')
+  expect(response.type).toEqual('Success')
 })
 
 test('unauthorized error', async () => {
@@ -24,9 +23,9 @@ test('unauthorized error', async () => {
     pageSize: 2
   }
   const response = await searchProducts(client, input)
-  expect(response.apiResponseType).toEqual('error')
+  expect(response.type).toEqual('Error')
   const { error } = response as ApiErrorResponse
-  expect(error.type).toEqual(ErrorType.Unauthorized)
+  expect(error.type).toEqual('Unauthorized')
 })
 
 test('bad request error', async () => {
@@ -36,8 +35,8 @@ test('bad request error', async () => {
     productTipe: ProductType.Sunglasses,
   } as any
   const response = await searchProducts(client, badInput)
-  expect(response.apiResponseType).toEqual('error')
+  expect(response.type).toEqual('Error')
   const { error } = response as ApiErrorResponse
 
-  expect(error.type).toEqual(ErrorType.BadRequest)
+  expect(error.type).toEqual('Bad Request')
 })

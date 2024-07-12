@@ -19,3 +19,4 @@ OPTIX_API_KEY="<your api key>"
 ## TODOs
 
 - [ ]  make default page size of 100
+- [ ] add more info to errors in `toExn`
