@@ -9,17 +9,17 @@ export type ApiSuccessResponse<T> = {
   apiResponseType: ApiResponseType.Success
   data: T,
   // The raw response from the api
-  response: Response
+  // response: Response
 }
 
 export type ApiErrorResponse = {
   apiResponseType: ApiResponseType.Error,
   error: ApiError,
   // The raw response from the api
-  response: Response
+  // response: Response
 }
 
-export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
+export type ApiResponse<T> = {response: Response} & ( ApiSuccessResponse<T> | ApiErrorResponse)
 
 export type ClientResponse<T> = {
   data?: T;
@@ -81,13 +81,19 @@ export function fromClientResponse<T>(response: ClientResponse<T>): ApiResponse<
   }
 }
 
-export function toExn<T>(response: ApiResponse<T>): T {
-  switch (response.apiResponseType) {
-    case ApiResponseType.Error:
-      throwError(response.error)
-    case ApiResponseType.Success:
-      // TODO: why does TS not infer this?
-      const { data } = response as ApiSuccessResponse<T>
-      return data
+export function toExn<T>(response: ApiResponse<T>): T | void {
+  // switch (response.apiResponseType) {
+  //   case ApiResponseType.Error:
+  //     throwError(response.error)
+  //   case ApiResponseType.Success:
+  //     // TODO: why does TS not infer this?
+  //     const { data } = response
+  //     return data
+  // }
+  if(response.apiResponseType === ApiResponseType.Error) {
+    throwError(response.error)
+  } else {
+    const { data } = response
+    return data
   }
 }
