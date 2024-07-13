@@ -1,0 +1,27 @@
+import { ProductGetPricesInput, ProductGetPricesResponse, ProductGetRetailPricesInput, ProductGetRetailPricesResponse, ProductGetSkusInput, ProductGetSkusResponse, ProductSearchInput, ProductSearchResponse } from "./live/product";
+import { ApiResponse } from "./response";
+import { SkuGetDetailsInput, SkuGetDetailsResponse, SkuGetPricesInput, SkuGetPricesResponse, SkuGetStockLevelsInput, SkuGetStockLevelsResponse, SkuUpdateStockLevelBySkuInput, SkuUpdateStockLevelBySkuResponse } from "./live/sku";
+import { BranchDetailsRequest, BranchDetailsResponse, BranchSearchRequest, BranchSearchResponse } from "./live/branch";
+export type OptixApiClient = {
+    branchGetDetails: (input: BranchDetailsRequest) => Promise<ApiResponse<BranchDetailsResponse>>;
+    branchGetDetailsExn: (input: BranchDetailsRequest) => Promise<BranchDetailsResponse>;
+    branchesSearch: (input: BranchSearchRequest) => Promise<ApiResponse<BranchSearchResponse>>;
+    branchesSearchExn: (input: BranchSearchRequest) => Promise<BranchSearchResponse>;
+    productGetSkus: (input: ProductGetSkusInput) => Promise<ApiResponse<ProductGetSkusResponse>>;
+    productGetSkusExn: (input: ProductGetSkusInput) => Promise<ProductGetSkusResponse>;
+    productGetPrices: (input: ProductGetPricesInput) => Promise<ApiResponse<ProductGetPricesResponse>>;
+    productGetPricesExn: (input: ProductGetPricesInput) => Promise<ProductGetPricesResponse>;
+    productGetRetailPrices: (input: ProductGetRetailPricesInput) => Promise<ApiResponse<ProductGetRetailPricesResponse>>;
+    productGetRetailPricesExn: (input: ProductGetRetailPricesInput) => Promise<ProductGetRetailPricesResponse>;
+    productsSearch: (input: ProductSearchInput) => Promise<ApiResponse<ProductSearchResponse>>;
+    productsSearchExn: (input: ProductSearchInput) => Promise<ProductSearchResponse>;
+    skuGetStockLevels: (input: SkuGetStockLevelsInput) => Promise<ApiResponse<SkuGetStockLevelsResponse>>;
+    skuGetStockLevelsExn: (input: SkuGetStockLevelsInput) => Promise<SkuGetStockLevelsResponse>;
+    skuGetDetails: (input: SkuGetDetailsInput) => Promise<ApiResponse<SkuGetDetailsResponse>>;
+    skuGetDetailsExn: (input: SkuGetDetailsInput) => Promise<SkuGetDetailsResponse>;
+    skuGetPrices: (input: SkuGetPricesInput) => Promise<ApiResponse<SkuGetPricesResponse>>;
+    skuGetPricesExn: (input: SkuGetPricesInput) => Promise<SkuGetPricesResponse>;
+    skuUpdateStockLevelBySku: (input: SkuUpdateStockLevelBySkuInput) => Promise<ApiResponse<SkuUpdateStockLevelBySkuResponse>>;
+    skuUpdateStockLevelBySkuExn: (input: SkuUpdateStockLevelBySkuInput) => Promise<SkuUpdateStockLevelBySkuResponse>;
+};
+export declare function newLiveClient(apiKey: string): OptixApiClient;
