@@ -1,45 +1,43 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const vitest_1 = require("vitest");
-const api_1 = require("../api");
-require("dotenv/config");
-const product_1 = require("../live/product");
-(0, vitest_1.test)('search products', async () => {
+import { expect, test } from 'vitest';
+import { newLiveClient } from '../api';
+import 'dotenv/config';
+import { ProductType } from '../live/product';
+test('search products', async () => {
     const apiKey = process.env.OPTIX_API_KEY;
-    const client = (0, api_1.newLiveClient)(apiKey);
+    const client = newLiveClient(apiKey);
     const input = {
-        productType: product_1.ProductType.Sunglasses,
+        productType: ProductType.Sunglasses,
         pageSize: 2
     };
     const response = await client.productsSearch(input);
-    (0, vitest_1.expect)(response.type).toEqual('Success');
+    expect(response.type).toEqual('Success');
 });
-(0, vitest_1.test)('unauthorized error', async () => {
+test('unauthorized error', async () => {
     const apiKey = "invalidApiKey";
-    const client = (0, api_1.newLiveClient)(apiKey);
+    const client = newLiveClient(apiKey);
     const input = {
-        productType: product_1.ProductType.Sunglasses,
+        productType: ProductType.Sunglasses,
         pageSize: 2
     };
     const response = await client.productsSearch(input);
-    (0, vitest_1.expect)(response.type).toEqual('Error');
+    expect(response.type).toEqual('Error');
     const { error } = response;
-    (0, vitest_1.expect)(error.type).toEqual('Unauthorized');
+    expect(error.type).toEqual('Unauthorized');
 });
-(0, vitest_1.test)('bad request error', async () => {
+test('bad request error', async () => {
     const apiKey = process.env.OPTIX_API_KEY;
-    const client = (0, api_1.newLiveClient)(apiKey);
+    const client = newLiveClient(apiKey);
     const badInput = {
-        productTipe: product_1.ProductType.Sunglasses,
+        productTipe: ProductType.Sunglasses,
     };
     const response = await client.productsSearch(badInput);
-    (0, vitest_1.expect)(response.type).toEqual('Error');
+    expect(response.type).toEqual('Error');
     const { error } = response;
-    (0, vitest_1.expect)(error.type).toEqual('Bad Request');
+    expect(error.type).toEqual('Bad Request');
 });
-(0, vitest_1.test)('branch/product/sku operations', async () => {
+test('branch/product/sku operations', async () => {
     const apiKey = process.env.OPTIX_API_KEY;
-    const client = (0, api_1.newLiveClient)(apiKey);
+    const client = newLiveClient(apiKey);
     const branches = await client.branchesSearchExn({
         pageSize: 2
     });
@@ -51,7 +49,7 @@ const product_1 = require("../live/product");
         branchId: branch.id
     });
     const productSearchInput = {
-        productType: product_1.ProductType.Sunglasses,
+        productType: ProductType.Sunglasses,
         pageSize: 2
     };
     const productsData = await client.productsSearchExn(productSearchInput);
@@ -79,5 +77,5 @@ const product_1 = require("../live/product");
             }
         ]
     });
-    (0, vitest_1.expect)(1).toEqual(1);
+    expect(1).toEqual(1);
 });

@@ -3,10 +3,11 @@
     "target": "es2019",
     "strict": true,
     "esModuleInterop": true,
-    "module": "commonjs",
+    "module": "ES2015",
     "outDir": "dist",
     "noUncheckedIndexedAccess": true,
     "declaration": true,
+    "moduleResolution": "bundler"
   },
   "include": [ "**/*.ts"],
   "exclude": ["node_modules"]

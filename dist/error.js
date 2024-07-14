@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.fromClientError = void 0;
-function fromClientError(error) {
+export function fromClientError(error) {
     if (error.status === 401) {
         return {
             type: 'Unauthorized',
@@ -40,4 +37,3 @@ function fromClientError(error) {
         };
     }
 }
-exports.fromClientError = fromClientError;

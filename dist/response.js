@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.toExn = exports.fromClientResponse = void 0;
-const error_1 = require("./error");
-function fromClientResponse(response) {
+import { fromClientError } from "./error";
+export function fromClientResponse(response) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     if (((_a = response.response) === null || _a === void 0 ? void 0 : _a.status) === 401) {
         return {
@@ -38,7 +35,7 @@ function fromClientResponse(response) {
         };
     }
     if (response.error) {
-        const error = (0, error_1.fromClientError)(response.error);
+        const error = fromClientError(response.error);
         return {
             type: 'Error',
             error: error,
@@ -57,9 +54,8 @@ function fromClientResponse(response) {
         };
     }
 }
-exports.fromClientResponse = fromClientResponse;
 // TODO: add more info to errors
-function toExn(response) {
+export function toExn(response) {
     switch (response.type) {
         case 'Success':
             return response.data;
@@ -78,4 +74,3 @@ function toExn(response) {
             throw new Error("Unknown Error");
     }
 }
-exports.toExn = toExn;
